@@ -52,7 +52,9 @@ public class Lession04 {
 					}	
 		
 				}
-			
+			if (issochan== true) {
+			sochan .add(currsochan);
+				}
 			}
 			
 					return sochan;
@@ -77,9 +79,11 @@ public class Lession04 {
 				if (currsole % k == 0) {
 					issole = false;
 					break;
-			}			
-		}
-		
+				}			
+			}
+			if (issole== true) {
+				sole.add(currsole);
+			}
 		}
 		return sole;
 	}
