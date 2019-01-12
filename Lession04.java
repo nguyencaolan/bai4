@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /*
  * Viết class tên là MyNumber với các đạc điểm sau
  * - Thuộc tính
@@ -21,74 +24,123 @@ public class Lession04 {
 		// thuộc tính
 		
 		public int[] arrNumber;
-		public int min[];
-		public int max[];
+		
 		//Method khởi tạo
 	
 	   public MyNumber (int [] number) {
 		this. arrNumber = arrNumber;
-	
-		}
-	// Method get so chan
-	  
-	   public ArrayList Get_Sochan() {
+	   }
 		
-		
-		ArrayList sochan = new ArrayList();
-		
-		//boolean sochan1 = false;
-		
-		for (int i = 0; i < arrNumber.length; i++) {
+	public ArrayList Get_Sochan() {
 			
-			int currsochan = arrNumber [i];
+			ArrayList lstSochan = new ArrayList();
 			
-			boolean issochan = true;
-			
-			for (int k = 0; k < currsochan; k++) {
-				if (currsochan % k != 0) {
-					issochan = false;
-					break;
-					
-					}	
-		
-				}
-			if (issochan== true) {
-			sochan .add(currsochan);
+			for(int i=0; i< arrNumber.length; i++){
+				if(i%2==0)
+				{
+					lstSochan.add(i);
 				}
 			}
+			   
+			return lstSochan;
+		}
+	   	
+	   public ArrayList Get_Sole() {
 			
-					return sochan;
+			ArrayList lstSole = new ArrayList();
+			
+			for(int i=0; i< arrNumber.length; i++){
+				if(i%2==0)
+				{
+					lstSole.add(i);
+				}
+			}
+			   
+			return lstSole;
+		}
+	   public ArrayList GetSum()
+		{
+			//Mang luu tong 
+			ArrayList lstSumNumber = new ArrayList();
+			//Get sochan va sole
+			ArrayList lstSoChan = this.Get_Sochan();
+			ArrayList lstSoLe = this.Get_Sole();
+			
+			if(lstSoChan.size() > lstSoLe.size())
+			{
+				for(int i=0; i<lstSoChan.size(); i++)
+				{
+					if(i<lstSoLe.size())
+					{
+						int sochan = (int)lstSoChan.get(i);
+						int sole = (int)lstSoLe.get(i);
+						lstSumNumber.add(sochan+sole);
+					}
+					else
+					{
+						lstSumNumber.add(lstSoChan.get(i));
+					}
+				}
+			}
+			else
+			{
+				for(int i=0; i<lstSoLe.size(); i++)
+				{
+					if(i<lstSoChan.size())
+					{
+						int sochan = (int)lstSoChan.get(i);
+						int sole = (int)lstSoLe.get(i);
+						lstSumNumber.add(sochan+sole);
+					}
+					else
+					{
+						lstSumNumber.add(lstSoLe.get(i));
+					}
+				}
+			}
+			return lstSoLe;
+			
+		}
+	   @Test
+	   public void Test_Get_Sochan(){
+		
+		   //Arrange
 		   
+		   MyNumber Mysochan =  new MyNumber(); 
+		   MyNumber Mysole =  new MyNumber(); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
+		   
+		   //Acction
+		   
+		   boolean result = Mysochan.Get_Sochan(2,4,8); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
+		   
+		   
+		   //Assertion
+		   
+		   Assert.assertEquals(true,  result );
+		   
+		   
+	   }
+	   
+	   @Test
+	   public void Test_Get_Sole(){
 		
-	}
-
-	
-	public ArrayList Get_Sole() {
-		
-		ArrayList sole = new ArrayList();
-		
-		//boolean sochan1 = false;
-		
-		for (int i = 0; i < arrNumber.length; i++) {
-			
-			int currsole = arrNumber [i];
-			
-			boolean issole = false;
-			
-			for (int k = 2; k < currsole; k++) {
-				if (currsole % k == 0) {
-					issole = false;
-					break;
-				}			
-			}
-			if (issole== true) {
-				sole.add(currsole);
-			}
-		}
-		return sole;
-	}
-
-	
-	}
+		   //Arrange
+		   
+		   MyNumber Mysole =  new MyNumber(); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
+		   
+		   //Acction
+		   
+		   boolean result = Mysochan.Get_Sole(3,5,7,9); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
+		   
+		   
+		   //Assertion
+		   
+		   Assert.assertEquals(true,  result );
+		   
+		   
+	   }
+	 
+   }
 }
+
 	
