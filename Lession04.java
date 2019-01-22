@@ -1,146 +1,139 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
-/*
- * Viết class tên là MyNumber với các đạc điểm sau
- * - Thuộc tính
- * + int number - chứa số nhập vào từ constructor
- * - Phương thức
- * + MyNumber(int n) - Khởi tạo cho thuộc tính number;
- * + ArrayList Get_Sochan() - Trả ra danh sách tất cả các số chẵn nhỏ hơn number
-   + ArrayList get_SoLe() - Trả ra danh sách tất cả các số lẻ nhỏ hơn nyumber
-   + ArrayList get_SoTongHop() - Trả ra một danh sách gồm tổng các số chẵn lẻ ở 
-   vị trí tương ứng, trong trường hợp khuyết 1 trong 2 số thì giữ nguyên số còn lại
- - Viết Test cho 03 methods này
- */
+
+
 public class Lession04 {
 	
-	   class MyNumber{
-		
-		// thuộc tính
-		
-		public int[] arrNumber;
-		
-		//Method khởi tạo
-	
-	   public MyNumber (int [] number) {
-		this. arrNumber = arrNumber;
-	   }
-		
-	public ArrayList Get_Sochan() {
-			
-			ArrayList lstSochan = new ArrayList();
-			
-			for(int i=0; i< arrNumber.length; i++){
-				if(i%2==0)
-				{
-					lstSochan.add(i);
-				}
-			}
-			   
-			return lstSochan;
+	class MyNumber {
+		// Thuộc tính
+		public int number;
+
+		// Constructor
+		public MyNumber(int number) {
+			this.number = number;
 		}
-	   	
-	   public ArrayList Get_Sole() {
+
+		public ArrayList<Integer> Get_Sochan() {
+			// Cần lặp từ đầu 0 đến number, mỗi lần lặp kiểm tra số tại vị trí lặp
+			// nếu chia hết cho 2 thì lưu lại
+			//ArrayList arrOrderNumber = new ArrayList(); // Để lưu kq kt
 			
-			ArrayList lstSole = new ArrayList();
-			
-			for(int i=0; i< arrNumber.length; i++){
-				if(i%2==0)
-				{
-					lstSole.add(i);
+			//Khai báo ArrayList có kiểu như sau
+			ArrayList<Integer> arrOrderNumber = new ArrayList<Integer>();
+			//Mỗi một kiểu premitive sẽ có một class tương ứng. 
+			// Sử dụng class này để định kiểu cho ArrayList
+			//int a = arrOrderNumber.get(0);
+					
+			for (int i = 0; i < number; i++) {
+				if (i % 2 == 0) {
+					arrOrderNumber.add(i);
 				}
 			}
-			   
-			return lstSole;
+			return arrOrderNumber;
 		}
-	   public ArrayList GetSum()
-		{
-			//Mang luu tong 
-			ArrayList lstSumNumber = new ArrayList();
-			//Get sochan va sole
-			ArrayList lstSoChan = this.Get_Sochan();
-			ArrayList lstSoLe = this.Get_Sole();
-			
-			if(lstSoChan.size() > lstSoLe.size())
-			{
-				for(int i=0; i<lstSoChan.size(); i++)
-				{
-					if(i<lstSoLe.size())
-					{
-						int sochan = (int)lstSoChan.get(i);
-						int sole = (int)lstSoLe.get(i);
-						lstSumNumber.add(sochan+sole);
-					}
-					else
-					{
-						lstSumNumber.add(lstSoChan.get(i));
-					}
+
+		public ArrayList Get_Sole() {
+			// Lặp từ đầu đến cuối, kiểm tra xem chia hết cho 2 ko?
+			// Nếu ko thì lưu lại
+			ArrayList arrSoLe = new ArrayList();
+
+			for (int i = 0; i < this.number; i++) {
+				if (i % 2 != 0) {
+					arrSoLe.add(i);
 				}
 			}
-			else
-			{
-				for(int i=0; i<lstSoLe.size(); i++)
-				{
-					if(i<lstSoChan.size())
-					{
-						int sochan = (int)lstSoChan.get(i);
-						int sole = (int)lstSoLe.get(i);
-						lstSumNumber.add(sochan+sole);
-					}
-					else
-					{
-						lstSumNumber.add(lstSoLe.get(i));
-					}
-				}
-			}
-			return lstSoLe;
-			
+			return arrSoLe;
 		}
-	   @Test
-	   public void Test_Get_Sochan(){
+
+		public ArrayList Get_Sum() {
+			// Lấy mảng chẵn
+			// Lấy mảng lẻ
+			// Thêm 0 vào mảng ngắn hơn
+			// Cộng các phần tử tương ứng
+			ArrayList sochan = this.Get_Sochan();
+			ArrayList sole = this.Get_Sole();
+
+			if (sochan.size() < sole.size()) {
+				for (int i = sochan.size(); i < sole.size(); i++) {
+					sochan.add(0);
+				}
+			} else {
+				for (int i = sole.size(); i < sochan.size(); i++) {
+					sole.add(0);
+				}
+			}
+
+			// Tinh tong
+			ArrayList sum = new ArrayList();
+			for (int i = 0; i < sole.size(); i++) {
+				int tong = (int) sole.get(i) + (int) sochan.get(i);
+
+				sum.add(tong);
+			}
+			return sum;
+		}
+	}
+
+	// Test
+	@Test
+	@Ignore
+	public void Test_Get_Sochan() {
+		// Arrange
+		int number = 10;
+		MyNumber myNum = new MyNumber(number);
+
+		// Action
+		ArrayList myResult = myNum.Get_Sochan();
+
+		// Assertion
+		Assert.assertEquals(5, myResult.size());
+		Assert.assertEquals(0, myResult.get(0));
+		Assert.assertEquals(8, myResult.get(myResult.size() - 1));
+	}
+
+	@Test
+	@Ignore
+	public void Test_Get_SoLe() {
+		// Arrange
+		int number = 10;
+		MyNumber myNum = new MyNumber(number);
+
+		// Action
+		ArrayList myResult = myNum.Get_Sole();
+
+		// Assertion
+		Assert.assertEquals(5, myResult.size());
+		Assert.assertEquals(1, myResult.get(0));
+		Assert.assertEquals(9, myResult.get(myResult.size() - 1));
+	}
+
+	@Test
+	public void Test_Sum() {
+		// Arrange
+		int number = 11;
+		MyNumber myNum = new MyNumber(number);
+
+		// Action
+		ArrayList myResult = myNum.Get_Sum();
 		
-		   //Arrange
-		   
-		   MyNumber Mysochan =  new MyNumber(); 
-		   MyNumber Mysole =  new MyNumber(); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
-		   
-		   //Acction
-		   
-		   boolean result = Mysochan.Get_Sochan(2,4,8); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
-		   
-		   
-		   //Assertion
-		   
-		   Assert.assertEquals(true,  result );
-		   
-		   
-	   }
-	   
-	   @Test
-	   public void Test_Get_Sole(){
-		
-		   //Arrange
-		   
-		   MyNumber Mysole =  new MyNumber(); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
-		   
-		   //Acction
-		   
-		   boolean result = Mysochan.Get_Sole(3,5,7,9); ///Chỗ này báo lỗi, em coi dùm anh tại sao nhé///
-		   
-		   
-		   //Assertion
-		   
-		   Assert.assertEquals(true,  result );
-		   
-		   
-	   }
-	 
-   }
+		for (int i = 0; i < myResult.size(); i++) {
+			System.out.println(myResult.get(i));
+		}
+	}
 }
+			   
+			      		   
+	   
+	   
+	   
+
+
+	   
+		
+		  
 
 	
